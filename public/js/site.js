@@ -16,13 +16,13 @@
     try { sessionStorage.setItem(key, JSON.stringify(stored)); } catch (error) { /* a tárhely zárva lehet */ }
   }
   document.addEventListener('click', function (event) {
-    document.querySelectorAll('.menu-drop[open]').forEach(function (menu) {
+    document.querySelectorAll('.menu-sub[open]').forEach(function (menu) {
       if (!menu.contains(event.target)) menu.open = false;
     });
   });
   document.addEventListener('keydown', function (event) {
     if (event.key !== 'Escape') return;
-    document.querySelectorAll('.menu-drop[open]').forEach(function (menu) { menu.open = false; });
+    document.querySelectorAll('.menu-sub[open]').forEach(function (menu) { menu.open = false; });
     var toggle = document.getElementById('nav-toggle');
     if (toggle && toggle.checked) toggle.checked = false;
   });

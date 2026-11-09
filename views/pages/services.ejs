@@ -1,0 +1,21 @@
+<div class="wrap layout">
+  <div class="main-col">
+    <article class="prose">
+      <%- include('../partials/crumb') %>
+      <header class="page-head">
+        <p class="kicker">Szolgáltatások</p>
+        <h1>Ipari térfelmérés</h1>
+        <p class="lede">A három feladat külön oldalon van. A kártya ugyanoda visz, mint a menü alpontja.</p>
+      </header>
+    </article>
+    <div class="cards">
+      <% cards.forEach(function (card) { %>
+        <a class="card" href="<%= card.href %>">
+          <h2><%= card.label %></h2>
+          <p><%= card.text %></p>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+  <%- include('../partials/sidebar') %>
+</div>

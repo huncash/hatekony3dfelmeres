@@ -19,6 +19,7 @@ export const campaignCard = {
 
 const articleByPath = {
   '/': '3d-felmeres-mukodo-uzemben',
+  '/szolgaltatasok': '3d-felmeres-mukodo-uzemben',
   '/geptelepites-elokeszites': 'meglevo-allapotfelmeres-geptelepites-elott',
   '/csarnok-atalakitas': 'helyszini-bizonytalansag-csokkentese',
   '/gepeszeti-ter-rekonstrukcio': 'helyszini-bizonytalansag-csokkentese',

@@ -4,6 +4,7 @@ import { faqs, homeFaqs } from '../content/faq.js';
 import { privacyPage, imprintPage, termsPage } from '../content/legal.js';
 import { CONTENT_DATE, publicRoutes } from '../content/catalog.js';
 import { pricingPage, processPage, samplesPage, services, techPage } from '../content/pages.js';
+import { serviceNav } from '../content/sidebar.js';
 import { ACCURACY, COORDS, FILE_SIZES, INDUSTRIES, OUTPUTS, PROJECT_TYPES } from '../lib/options.js';
 import { sendPage } from '../lib/render.js';
 import { clientIp, issueFormToken, rateLimit, sameOrigin, signRef, verifyFormToken, verifyRef } from '../lib/security.js';
@@ -110,6 +111,28 @@ export function registerWeb(app, { db, logger }) {
   });
 
   app.get('/', (req, res) => renderHome(req, res));
+
+  app.get('/szolgaltatasok', (req, res) => {
+    const canonical = `${config.siteUrl}/szolgaltatasok`;
+    const crumbs = [{ name: 'Szolgáltatások' }];
+    const cards = serviceNav.map((item) => {
+      const service = services.find((page) => page.path === item.href);
+      return { href: item.href, label: item.label, text: service.cardText };
+    });
+    sendPage(res, 'pages/services', {
+      metaTitle: 'Szolgáltatások | Hatékony 3D felmérés',
+      metaDescription: 'Géptelepítés előkészítése, csarnok- és raktárátalakítás, valamint gépészeti terek felmérése. A kártyák a menü alpontjaival azonos oldalakra visznek.',
+      canonical,
+      crumbs,
+      cards,
+      jsonLd: graph([
+        organizationNode(),
+        professionalServiceNode(),
+        serviceNode('Ipari térfelmérés', 'Meglévő ipari terek felmérése géptelepítéshez, csarnokátalakításhoz és gépészeti rekonstrukcióhoz.', canonical),
+        schemaCrumbs(crumbs, canonical),
+      ]),
+    });
+  });
 
   for (const service of services) {
     app.get(service.path, (req, res) => {

@@ -7,6 +7,7 @@ export const CONTENT_DATE = '2026-11-09';
 export function publicRoutes() {
   const fixed = [
     { path: '/', priority: '1.0' },
+    { path: '/szolgaltatasok', priority: '0.9' },
     { path: services[0].path, priority: '0.9' },
     { path: services[1].path, priority: '0.9' },
     { path: services[2].path, priority: '0.9' },
@@ -30,6 +31,7 @@ export function publicRoutes() {
 
 const titled = [
   { path: '/', metaTitle: '3D felmérés ipari átépítéshez | Hatékony 3D felmérés', metaDescription: 'Meglévő terek rögzítése géptelepítéshez és átalakításhoz, az üzemi hozzáféréshez igazítva. Ipari üzemeltetőknek és kivitelezőknek.' },
+  { path: '/szolgaltatasok', metaTitle: 'Szolgáltatások | Hatékony 3D felmérés', metaDescription: 'Géptelepítés előkészítése, csarnok- és raktárátalakítás, valamint gépészeti terek felmérése. A kártyák a menü alpontjaival azonos oldalakra visznek.' },
   ...services.map((page) => ({ path: page.path, metaTitle: page.metaTitle, metaDescription: page.metaDescription })),
   { path: processPage.path, metaTitle: processPage.metaTitle, metaDescription: processPage.metaDescription },
   { path: samplesPage.path, metaTitle: samplesPage.metaTitle, metaDescription: samplesPage.metaDescription },
