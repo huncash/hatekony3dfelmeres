@@ -1,0 +1,76 @@
+<div class="wrap admin">
+  <header class="page-head admin-head">
+    <div>
+      <p class="kicker">Nyilvántartás</p>
+      <h1>Projektigények</h1>
+    </div>
+    <form method="post" action="/admin/kilepes">
+      <input type="hidden" name="csrf" value="<%= csrf %>">
+      <button class="btn btn-secondary" type="submit">Kilépés</button>
+    </form>
+  </header>
+  <% if (!smtpOn) { %>
+    <p class="note-inline">Az SMTP nincs beállítva. Az értesítő levelek a <code>data/outbox</code> mappába kerülnek, a projektigény ettől még rögzül.</p>
+  <% } %>
+  <ul class="count-list">
+    <% counts.forEach(function (row) { %>
+      <li><a href="/admin?status=<%= row.status %>"><%= statusLabel(row.status) %>: <%= row.n %></a></li>
+    <% }) %>
+  </ul>
+  <form class="filters" method="get" action="/admin">
+    <label class="field">
+      <span>Keresés</span>
+      <input name="q" value="<%= q %>" placeholder="Cég, név, e-mail, helyszín, azonosító">
+    </label>
+    <label class="field">
+      <span>Státusz</span>
+      <select name="status">
+        <option value="">Nyitott nézet</option>
+        <% statuses.forEach(function (item) { %>
+          <option value="<%= item[0] %>" <%= status === item[0] ? 'selected' : '' %>><%= item[1] %></option>
+        <% }) %>
+      </select>
+    </label>
+    <label class="check filter-check">
+      <input type="checkbox" name="all" value="1" <%= includeSpam ? 'checked' : '' %>>
+      <span>Rejtett beküldések is</span>
+    </label>
+    <button class="btn btn-secondary" type="submit">Szűrés</button>
+    <a class="btn btn-primary" href="<%= exportHref %>">CSV export</a>
+  </form>
+  <% if (!leads.length) { %>
+    <p>Ebben a nézetben nincs projektigény.</p>
+  <% } else { %>
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th scope="col">Azonosító</th>
+            <th scope="col">Beküldés</th>
+            <th scope="col">Cég</th>
+            <th scope="col">Kapcsolattartó</th>
+            <th scope="col">Projekt</th>
+            <th scope="col">Helyszín</th>
+            <th scope="col">Státusz</th>
+            <th scope="col">Levél</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% leads.forEach(function (lead) { %>
+            <tr>
+              <td><a href="/admin/igeny/<%= lead.id %>"><%= lead.public_ref %></a></td>
+              <td><%= formatStamp(lead.created_at) %></td>
+              <td><%= lead.company_name %></td>
+              <td><%= lead.contact_name %><br><a href="mailto:<%= lead.email %>"><%= lead.email %></a></td>
+              <td><%= projectLabel(lead.project_type) %></td>
+              <td><%= lead.location %></td>
+              <td><span class="status"><%= statusLabel(lead.status) %></span></td>
+              <td><%= lead.email_status || '—' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+  <p class="hint">A CSV pontosvesszővel tagolt és UTF-8, hogy a magyar Excel megnyissa. Legfeljebb 500 sor látszik a listában; a teljes szűrt halmaz az exportban is ennyi.</p>
+</div>

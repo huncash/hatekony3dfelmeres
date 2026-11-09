@@ -1,0 +1,13 @@
+<div class="wrap layout">
+  <article class="prose">
+    <%- include('../partials/crumb') %>
+    <header class="page-head">
+      <p class="kicker">Szakmai cikk</p>
+      <h1><%= article.title %></h1>
+      <p class="meta-line"><%= formatDay(article.date) %> · <%= siteName %></p>
+      <p class="lede"><%= article.lede %></p>
+    </header>
+    <%- include('../partials/blocks') %>
+  </article>
+  <%- include('../partials/sidebar') %>
+</div>

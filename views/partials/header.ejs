@@ -1,0 +1,32 @@
+<header class="site-header">
+  <div class="wrap header-top">
+    <a class="brand" href="/">
+      <span class="brand-name"><%= siteName %></span>
+      <span class="brand-sub">Ipari terepi felmérés</span>
+    </a>
+    <div class="header-tools">
+      <% if (phoneHref) { %><a class="header-phone" href="<%= phoneHref %>"><%= phone %></a><% } %>
+      <a class="btn btn-primary header-cta" href="/kapcsolat#projektigeny">Felmérést egyeztetek</a>
+      <label class="nav-toggle-label" for="nav-toggle">Menü</label>
+    </div>
+  </div>
+  <div class="nav-bar">
+    <div class="wrap nav-row">
+      <input class="nav-toggle" id="nav-toggle" type="checkbox">
+      <nav class="nav" aria-label="Főmenü">
+        <details class="menu-drop<% if (serviceNav.some(function (item) { return item.href === currentPath; })) { %> is-current<% } %>">
+          <summary>Szolgáltatások</summary>
+          <ul>
+            <% serviceNav.forEach(function (item) { %>
+              <li><a href="<%= item.href %>" <%- navActive(item.href) %>><%= item.label %></a></li>
+            <% }) %>
+          </ul>
+        </details>
+        <a href="/minta-anyagok" <%- navActive('/minta-anyagok') %>>Átadási anyagok</a>
+        <a href="/folyamat" <%- navActive('/folyamat') %>>Munkamenet</a>
+        <a href="/cikkek" <%- navActive('/cikkek') %>>Szakmai tudástár</a>
+        <a href="/kapcsolat" <%- navActive('/kapcsolat') %>>Kapcsolat</a>
+      </nav>
+    </div>
+  </div>
+</header>

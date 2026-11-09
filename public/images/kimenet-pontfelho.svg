@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <title>Pontfelhő szemléltetés</title>
+  <rect width="640" height="400" fill="#faf8f4"/>
+  <g fill="#1e3d38">
+    <circle cx="120" cy="250" r="3"/><circle cx="140" cy="248" r="3"/><circle cx="160" cy="246" r="3"/>
+    <circle cx="180" cy="230" r="3"/><circle cx="180" cy="210" r="3"/><circle cx="180" cy="190" r="3"/>
+    <circle cx="200" cy="190" r="3"/><circle cx="220" cy="190" r="3"/><circle cx="240" cy="192" r="3"/>
+    <circle cx="260" cy="210" r="3"/><circle cx="280" cy="230" r="3"/><circle cx="300" cy="248" r="3"/>
+    <circle cx="320" cy="250" r="3"/><circle cx="340" cy="250" r="3"/>
+  </g>
+  <rect x="360" y="150" width="180" height="110" fill="none" stroke="#8f3d16" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="40" y="48" fill="#1a2420" font-family="Segoe UI, sans-serif" font-size="18">Pontfelhő, szemléltetés</text>
+  <text x="40" y="78" fill="#3e4c47" font-family="Segoe UI, sans-serif" font-size="14">Nem mérési eredmény. A szaggatott rész takart.</text>
+</svg>

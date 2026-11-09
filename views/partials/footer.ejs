@@ -1,0 +1,42 @@
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="footer-name"><%= siteName %></p>
+      <p>Meglévő terek felmérése géptelepítéshez és átépítéshez, az üzemi működéshez igazítva.</p>
+      <p><a href="mailto:<%= email %>"><%= email %></a></p>
+      <% if (phoneHref) { %><p><a href="<%= phoneHref %>"><%= phone %></a></p><% } %>
+    </div>
+    <div>
+      <p class="footer-title">Szolgáltatások</p>
+      <ul>
+        <li><a href="/geptelepites-elokeszites">Géptelepítés előkészítése</a></li>
+        <li><a href="/csarnok-atalakitas">Csarnok- és raktárátalakítás</a></li>
+        <li><a href="/gepeszeti-ter-rekonstrukcio">Gépészeti tér rekonstrukciója</a></li>
+        <li><a href="/folyamat">A felmérés menete</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">Tájékozódás</p>
+      <ul>
+        <li><a href="/minta-anyagok">Minta anyagok</a></li>
+        <li><a href="/arak">Árazási logika</a></li>
+        <li><a href="/gyik">Gyakori kérdések</a></li>
+        <li><a href="/technologia">Műszerismertető</a></li>
+        <li><a href="/cikkek">Szakmai cikkek</a></li>
+        <li><a href="/kapcsolat">Kapcsolat</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-title">Dokumentumok</p>
+      <ul>
+        <li><a href="/aszf">ÁSZF</a></li>
+        <li><a href="/adatvedelem">Adatkezelési tájékoztató</a></li>
+        <li><a href="/impresszum">Impresszum</a></li>
+        <li><a href="https://bim.vrgo.hu" rel="noopener noreferrer">bim.vrgo.hu</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap legal-line">
+    <p>© <%= year %> <%= siteName %></p>
+  </div>
+</footer>

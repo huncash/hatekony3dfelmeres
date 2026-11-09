@@ -1,0 +1,45 @@
+<div class="wrap admin page">
+  <p class="crumb"><a href="/admin">Nyilvántartás</a> / <span><%= lead.public_ref %></span></p>
+  <header class="page-head admin-head">
+    <div>
+      <p class="kicker"><%= formatStamp(lead.created_at) %></p>
+      <h1><%= lead.company_name %></h1>
+      <p class="lede"><%= lead.public_ref %> · <span class="status"><%= statusLabel(lead.status) %></span></p>
+    </div>
+  </header>
+  <dl class="facts">
+    <% fields.forEach(function (field) { %>
+      <div>
+        <dt><%= field.label %></dt>
+        <dd><%= field.value || '—' %></dd>
+      </div>
+    <% }) %>
+  </dl>
+  <h2>Megjegyzés</h2>
+  <p class="note-block"><%= lead.note || '—' %></p>
+  <h2>Státusz</h2>
+  <form method="post" action="/admin/igeny/<%= lead.id %>/statusz" class="filters">
+    <input type="hidden" name="csrf" value="<%= csrf %>">
+    <label class="field">
+      <span>Új státusz</span>
+      <select name="status">
+        <% statuses.forEach(function (item) { %>
+          <option value="<%= item[0] %>" <%= lead.status === item[0] ? 'selected' : '' %>><%= item[1] %></option>
+        <% }) %>
+      </select>
+    </label>
+    <button class="btn btn-primary" type="submit">Mentés</button>
+  </form>
+  <% if (notice) { %><p role="status"><%= notice %></p><% } %>
+  <h2>Törlés</h2>
+  <p>Törlés előtt írja be az azonosítót. Ezzel teljesíthető a törlési kérés, ha még nincs megőrzési kötelezettség.</p>
+  <form method="post" action="/admin/igeny/<%= lead.id %>/torles" class="stack-form">
+    <input type="hidden" name="csrf" value="<%= csrf %>">
+    <label class="field">
+      <span>Azonosító megerősítése</span>
+      <input name="confirm" autocomplete="off" placeholder="<%= lead.public_ref %>">
+    </label>
+    <button class="btn btn-secondary" type="submit">Projektigény törlése</button>
+  </form>
+  <% if (error) { %><p class="field-error" role="alert"><%= error %></p><% } %>
+</div>

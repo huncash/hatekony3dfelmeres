@@ -1,0 +1,33 @@
+<div class="wrap layout">
+  <article class="prose">
+    <%- include('../partials/crumb') %>
+    <header class="page-head">
+      <p class="kicker"><%= kicker %></p>
+      <h1><%= h1 %></h1>
+      <p class="lede"><%= lede %></p>
+    </header>
+    <% outputs.forEach(function (output) { %>
+      <section class="sample">
+        <h2><%= output.title %></h2>
+        <figure class="schematic">
+          <img src="<%= output.image %>" width="640" height="400" alt="<%= output.alt %>">
+        </figure>
+        <% output.paragraphs.forEach(function (para) { %><p><%= para %></p><% }) %>
+      </section>
+    <% }) %>
+    <h2>Hely a saját projektfotónak</h2>
+    <p>Az alábbi keretek üresek. Ide a saját, a megrendelő engedélyével használt helyszíni kép kerülhet. A keret önmagában nem referencia és nem mérési eredmény.</p>
+    <div class="photo-grid">
+      <figure class="photo-slot">
+        <figcaption>Projektfotó helye: fogadó zóna géptelepítés előtt.</figcaption>
+      </figure>
+      <figure class="photo-slot">
+        <figcaption>Projektfotó helye: raktári folyosó az átalakítás határán.</figcaption>
+      </figure>
+      <figure class="photo-slot">
+        <figcaption>Projektfotó helye: gépészeti szakasz, ahol a takarás látszik.</figcaption>
+      </figure>
+    </div>
+  </article>
+  <%- include('../partials/sidebar') %>
+</div>

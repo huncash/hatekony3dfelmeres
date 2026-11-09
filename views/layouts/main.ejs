@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= metaTitle %></title>
+  <meta name="description" content="<%= metaDescription %>">
+  <link rel="canonical" href="<%= canonical %>">
+  <link rel="sitemap" type="application/xml" title="Oldaltérkép" href="/sitemap.xml">
+  <link rel="alternate" hreflang="hu" href="<%= canonical %>">
+  <% if (noindex) { %><meta name="robots" content="noindex, nofollow"><% } %>
+  <meta property="og:type" content="<%= ogType || 'website' %>">
+  <meta property="og:locale" content="hu_HU">
+  <meta property="og:site_name" content="<%= siteName %>">
+  <meta property="og:title" content="<%= metaTitle %>">
+  <meta property="og:description" content="<%= metaDescription %>">
+  <meta property="og:url" content="<%= canonical %>">
+  <meta property="og:image" content="<%= siteUrl %>/og.png">
+  <meta property="og:image:alt" content="Ipari felmérés: magyarázó ábra fogadó zónáról és bejutási útról">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= metaTitle %>">
+  <meta name="twitter:description" content="<%= metaDescription %>">
+  <meta name="twitter:image" content="<%= siteUrl %>/og.png">
+  <meta name="theme-color" content="#0c5e5b">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/site.css">
+  <% if (jsonLd) { %><script type="application/ld+json" nonce="<%= cspNonce %>"><%- jsonLd %></script><% } %>
+</head>
+<body>
+  <a class="skip" href="#tartalom">Ugrás a tartalomra</a>
+  <%- include('../partials/header') %>
+  <main id="tartalom">
+    <%- body %>
+  </main>
+  <%- include('../partials/footer') %>
+  <script src="/js/site.js" defer></script>
+</body>
+</html>

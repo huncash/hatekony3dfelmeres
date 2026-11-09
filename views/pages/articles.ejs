@@ -1,0 +1,20 @@
+<div class="wrap layout">
+  <div class="main-col">
+    <header class="page-head">
+      <%- include('../partials/crumb') %>
+      <p class="kicker">Szakmai cikkek</p>
+      <h1>Ipari felmérés, a feladat felől</h1>
+      <p class="lede">Írások a géptelepítés előtti állapotról, a terepi menetről, a működő üzemi hozzáférésről, a szükséges adatokról, a helyszíni bizonytalanságról és a pontfelhő ellenőrzéséről. Nem kulcsszógyűjtemény.</p>
+    </header>
+    <div class="article-list">
+      <% articles.forEach(function (article) { %>
+        <article>
+          <p class="meta-line"><%= formatDay(article.date) %></p>
+          <h2><a href="/cikkek/<%= article.slug %>"><%= article.title %></a></h2>
+          <p><%= article.excerpt %></p>
+        </article>
+      <% }) %>
+    </div>
+  </div>
+  <%- include('../partials/sidebar') %>
+</div>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" role="img">
+  <title>Sematikus csarnokalaprajz</title>
+  <rect width="720" height="560" fill="#faf8f4"/>
+  <g fill="none" stroke="#d5d0c6" stroke-width="1">
+    <path d="M40 40H680M40 120H680M40 200H680M40 280H680M40 360H680M40 440H680M40 520H680"/>
+    <path d="M40 40V520M120 40V520M200 40V520M280 40V520M360 40V520M440 40V520M520 40V520M600 40V520M680 40V520"/>
+  </g>
+  <rect x="48" y="48" width="624" height="464" fill="none" stroke="#1e3d38" stroke-width="3"/>
+  <g fill="#1e3d38">
+    <rect x="112" y="112" width="16" height="16"/>
+    <rect x="272" y="112" width="16" height="16"/>
+    <rect x="432" y="112" width="16" height="16"/>
+    <rect x="592" y="112" width="16" height="16"/>
+    <rect x="112" y="432" width="16" height="16"/>
+    <rect x="272" y="432" width="16" height="16"/>
+    <rect x="432" y="432" width="16" height="16"/>
+    <rect x="592" y="432" width="16" height="16"/>
+  </g>
+  <rect x="300" y="250" width="210" height="120" fill="#f6e4d8" stroke="#8f3d16" stroke-width="2"/>
+  <path d="M70 500 H150 V390 H300" fill="none" stroke="#8f3d16" stroke-width="2" stroke-dasharray="7 5"/>
+  <rect x="500" y="70" width="150" height="90" fill="none" stroke="#1e3d38" stroke-width="2"/>
+  <text x="318" y="316" fill="#1a2420" font-family="Segoe UI, sans-serif" font-size="16">fogadő zőna</text>
+  <text x="78" y="486" fill="#8f3d16" font-family="Segoe UI, sans-serif" font-size="14">bejutási út</text>
+  <text x="518" y="122" fill="#1e3d38" font-family="Segoe UI, sans-serif" font-size="14">gépészet</text>
+  <text x="70" y="78" fill="#1e3d38" font-family="Segoe UI, sans-serif" font-size="13">kapu</text>
+</svg>

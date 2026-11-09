@@ -1,0 +1,30 @@
+<div class="wrap layout">
+  <div class="main-col">
+    <header class="page-head">
+      <%- include('../partials/crumb') %>
+      <p class="kicker">Kapcsolat</p>
+      <h1>Projektigény és helyszíni egyeztetés</h1>
+      <% if (intent === 'egyeztetes') { %>
+        <p class="lede">Helyszíni egyeztetést kér. Írja le, melyik zónát kell együtt bejárni, és melyik műszakban lehetséges a belépés. Az egyeztetés nem kötelez megrendelésre.</p>
+      <% } else { %>
+        <p class="lede">Írja le, mit telepítenek vagy alakítanak át. Ha egy adat még nincs meg, a technikai mezőt hagyja üresen: nem találunk ki helyette tűrést vagy árat.</p>
+      <% } %>
+    </header>
+    <section class="contact-note">
+      <h2>Elérhetőség</h2>
+      <p><a href="mailto:<%= email %>"><%= email %></a></p>
+      <% if (phoneHref) { %><p><a href="<%= phoneHref %>"><%= phone %></a></p><% } %>
+      <h2>Mi történik a beküldés után</h2>
+      <ol class="steps">
+        <li><span class="step-no">1</span><div><h3>Rögzítés</h3><p>A projektigény a saját nyilvántartásunkba kerül, és e-mail értesítést küldünk a cég címére, ha a levélküldés be van állítva.</p></div></li>
+        <li><span class="step-no">2</span><div><h3>Áttekintés</h3><p>Munkaidőben megnézzük, a zóna, a hozzáférés és a kért kimenet elég-e egy vállaláshoz.</p></div></li>
+        <li><span class="step-no">3</span><div><h3>Válasz vagy kérdés</h3><p>Ha elég, a vállalás kereteiről írunk. Ha nem, előbb a hiányzó határt kérdezzük meg. Azonnali árat nem küldünk.</p></div></li>
+      </ol>
+    </section>
+    <section id="projektigeny">
+      <h2>Írja le, mit telepítenek vagy alakítanak át</h2>
+      <%- include('../partials/form', { briefMode: false }) %>
+    </section>
+  </div>
+  <%- include('../partials/sidebar') %>
+</div>

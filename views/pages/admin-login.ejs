@@ -1,0 +1,18 @@
+<div class="wrap page">
+  <article class="prose admin-card">
+    <h1>Projektigény-nyilvántartás</h1>
+    <% if (disabled) { %>
+      <p>Az admin felület kikapcsolva, amíg az <code>ADMIN_TOKEN</code> nincs beállítva a környezeti fájlban. A nyilvános oldal ettől még működik.</p>
+    <% } else { %>
+      <p>A belépés az alkalmazás saját jelszavával történik. Külön felhasználói fiók nincs, és a munkamenet nem közös más oldalakkal.</p>
+      <% if (error) { %><p class="field-error" role="alert"><%= error %></p><% } %>
+      <form method="post" action="/admin/belepes" class="stack-form">
+        <label class="field">
+          <span>Jelszó</span>
+          <input type="password" name="token" autocomplete="current-password" required>
+        </label>
+        <button class="btn btn-primary" type="submit">Belépés</button>
+      </form>
+    <% } %>
+  </article>
+</div>

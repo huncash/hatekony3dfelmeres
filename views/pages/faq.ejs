@@ -1,0 +1,12 @@
+<div class="wrap layout">
+  <article class="prose">
+    <%- include('../partials/crumb') %>
+    <header class="page-head">
+      <p class="kicker">Kérdések</p>
+      <h1 id="gyik-oldal">Gyakori kérdések</h1>
+      <p class="lede">Rövid válaszok a terjedelemről, a pontosságról, a termelés melletti munkáról és arról, hogy mit nem vállalunk. A részletes kifejtés a szakmai cikkekben van.</p>
+    </header>
+    <%- include('../partials/faq', { items: faqs, headingId: 'gyik-oldal' }) %>
+  </article>
+  <%- include('../partials/sidebar') %>
+</div>

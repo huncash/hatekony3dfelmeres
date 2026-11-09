@@ -1,0 +1,43 @@
+<aside class="side" aria-label="Kiegészítő információk">
+  <% if (side && side.campaign) { %>
+    <section class="side-card">
+      <% if (side.campaign.image) { %>
+        <img src="<%= side.campaign.image %>" alt="">
+      <% } %>
+      <h2><%= side.campaign.title %></h2>
+      <p><%= side.campaign.text %></p>
+      <a class="btn btn-primary" href="<%= side.campaign.href %>"><%= side.campaign.cta %></a>
+    </section>
+  <% } %>
+  <% if (side && side.showCta) { %>
+    <section class="side-card">
+      <h2>Átalakítást terveznek?</h2>
+      <p>Írja meg a helyszínt és a feladatot. Egyeztetjük a szükséges felmérést és az átadást.</p>
+      <a class="btn btn-primary" href="<%= side.ctaHref %>">Projektet egyeztetek</a>
+    </section>
+  <% } %>
+  <% if (side && side.showOutputs) { %>
+    <section class="side-card">
+      <h2>Átadási anyagok</h2>
+      <p>Színezett pontfelhő, terepi jegyzék és egyeztetett munkacsomag. Ezek nem automatikus csomag, és nem helyettesítenek referenciát.</p>
+      <a href="/minta-anyagok">A kimenetek leírása</a>
+    </section>
+  <% } %>
+  <% if (side && side.article) { %>
+    <section class="side-card">
+      <p class="side-kicker">Szakmai anyag</p>
+      <h2><a href="<%= side.article.href %>"><%= side.article.title %></a></h2>
+      <p><%= side.article.text %></p>
+    </section>
+  <% } %>
+  <% if (side && side.related && side.related.length) { %>
+    <section class="side-card">
+      <h2>Kapcsolódó anyag</h2>
+      <ul class="side-links">
+        <% side.related.forEach(function (link) { %>
+          <li><a href="<%= link.href %>"><%= link.label %></a></li>
+        <% }) %>
+      </ul>
+    </section>
+  <% } %>
+</aside>

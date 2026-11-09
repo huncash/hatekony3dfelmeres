@@ -1,0 +1,8 @@
+<section class="faq-list" aria-labelledby="<%= headingId || 'gyik-cim' %>">
+  <% items.forEach(function (item) { %>
+    <details>
+      <summary><%= item.q %></summary>
+      <p><%= item.a %></p>
+    </details>
+  <% }) %>
+</section>

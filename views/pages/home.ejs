@@ -1,0 +1,68 @@
+<div class="wrap layout">
+  <div class="main-col">
+    <section class="hero">
+      <p class="kicker">Ipari üzemeltetőknek és kivitelezőknek</p>
+      <h1>3D felmérés ipari átépítéshez</h1>
+      <p class="lede">Meglévő terek rögzítése géptelepítéshez és átalakításhoz, az üzemi hozzáféréshez igazítva.</p>
+      <ul class="marks">
+        <li>Milliméteres pontosságú térfelmérés</li>
+        <li>Színezett pontfelhő</li>
+        <li>Egyeztetett dokumentáció</li>
+      </ul>
+      <div class="actions">
+        <a class="btn btn-primary" href="#kapcsolat">Felmérést egyeztetek</a>
+      </div>
+    </section>
+
+    <section class="section" id="feladatok" aria-labelledby="feladatok-cim">
+      <h2 id="feladatok-cim">Milyen feladatokra?</h2>
+      <div class="cards">
+        <% services.forEach(function (service) { %>
+          <article class="card">
+            <h3><%= service.cardTitle %></h3>
+            <p><%= service.cardText %></p>
+            <a href="<%= service.path %>">A feladat</a>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+
+    <section class="section" id="atadas" aria-labelledby="atadas-cim">
+      <h2 id="atadas-cim">Mit adunk át?</h2>
+      <p>A géptelepítés vagy átépítés szempontjából releváns meglévő teret rögzítjük. Egyeztetett kimenet lehet a színezett pontfelhő és a képi dokumentáció.</p>
+      <p>A feladathoz szükséges pontosságot és az átadás tartalmát előzetesen egyeztetjük. Nem automatikus csomag.</p>
+      <p class="section-link"><a href="/minta-anyagok">A kimenetek leírása</a></p>
+    </section>
+
+    <section class="section" id="indulas" aria-labelledby="indulas-cim">
+      <h2 id="indulas-cim">Hogyan indul?</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-no">1</span>
+          <div><p>Leírja, mit telepítenek vagy alakítanak át, és melyik zónában.</p></div>
+        </li>
+        <li>
+          <span class="step-no">2</span>
+          <div><p>Egyeztetjük a hozzáférést és a kért kimenetet.</p></div>
+        </li>
+        <li>
+          <span class="step-no">3</span>
+          <div><p>A felmérés a megbeszélt időablakban történik, az átadás a rögzített formában.</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="section" id="kapcsolat" aria-labelledby="kapcsolat-cim">
+      <h2 id="kapcsolat-cim">Felmérés egyeztetése</h2>
+      <p class="lede">Írja meg, mit telepítenek vagy alakítanak át. A műszaki részleteket akkor adja meg, ha már megvannak.</p>
+      <%- include('../partials/form', { briefMode: true }) %>
+    </section>
+
+    <section class="section" aria-labelledby="gyik-cim">
+      <h2 id="gyik-cim">Gyakori kérdések</h2>
+      <%- include('../partials/faq', { items: faqs, headingId: 'gyik-cim' }) %>
+      <p class="section-link"><a href="/gyik">Az összes kérdés</a></p>
+    </section>
+  </div>
+  <%- include('../partials/sidebar') %>
+</div>

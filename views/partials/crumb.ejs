@@ -1,0 +1,13 @@
+<% if (crumbs && crumbs.length) { %>
+<nav class="crumb" aria-label="Morzsa">
+  <a href="/">Főoldal</a>
+  <% crumbs.forEach(function (crumb, index) { %>
+    <span aria-hidden="true">/</span>
+    <% if (crumb.href && index < crumbs.length - 1) { %>
+      <a href="<%= crumb.href %>"><%= crumb.name %></a>
+    <% } else { %>
+      <span><%= crumb.name %></span>
+    <% } %>
+  <% }) %>
+</nav>
+<% } %>

@@ -1,0 +1,15 @@
+services:
+  web:
+    build: .
+    container_name: hatekony3dfelmeres
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "8000"
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./data:/app/data

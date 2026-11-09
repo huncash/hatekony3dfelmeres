@@ -1,0 +1,160 @@
+<% var v = values || {}; var e = errors || {}; var outs = String(v.requested_output || '').split('|'); %>
+<form class="lead-form" method="post" action="/projektigeny" data-lead-form novalidate>
+  <input type="hidden" name="form_token" value="<%= formToken %>">
+  <input type="hidden" name="return_to" value="<%= returnTo || '/kapcsolat' %>">
+  <input type="hidden" name="szandek" value="<%= intent || 'feladat' %>">
+  <input type="hidden" name="source_url" value="">
+  <input type="hidden" name="source_domain" value="">
+  <input type="hidden" name="utm_source" value="<%= v.utm_source || '' %>">
+  <input type="hidden" name="utm_medium" value="<%= v.utm_medium || '' %>">
+  <input type="hidden" name="utm_campaign" value="<%= v.utm_campaign || '' %>">
+  <input type="hidden" name="utm_term" value="<%= v.utm_term || '' %>">
+  <input type="hidden" name="utm_content" value="<%= v.utm_content || '' %>">
+  <div class="hp" aria-hidden="true">
+    <label for="company_website">Weboldal</label>
+    <input id="company_website" name="company_website" tabindex="-1" autocomplete="off" value="">
+  </div>
+  <% if (e.form_token) { %><div class="form-errors" role="alert"><p><%= e.form_token %></p></div><% } %>
+  <% if (Object.keys(e).filter(function (key) { return key !== 'form_token'; }).length) { %>
+    <div class="form-errors" role="alert">
+      <p>A projektigényt még nem tudtuk rögzíteni. Javítsa a jelzett mezőket.</p>
+      <ul>
+        <% Object.keys(e).forEach(function (key) { if (key === 'form_token') return; %>
+          <li><a href="#field-<%= key %>"><%= e[key] %></a></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <fieldset>
+    <legend>Ki keres bennünket</legend>
+    <div class="form-grid">
+      <label class="field" id="field-company_name">
+        <span>Cég neve (kötelező)</span>
+        <input name="company_name" required maxlength="160" autocomplete="organization" value="<%= v.company_name || '' %>" aria-invalid="<%= e.company_name ? 'true' : 'false' %>">
+        <% if (e.company_name) { %><small class="field-error"><%= e.company_name %></small><% } %>
+      </label>
+      <label class="field" id="field-contact_name">
+        <span>Kapcsolattartó (kötelező)</span>
+        <input name="contact_name" required maxlength="120" autocomplete="name" value="<%= v.contact_name || '' %>" aria-invalid="<%= e.contact_name ? 'true' : 'false' %>">
+        <% if (e.contact_name) { %><small class="field-error"><%= e.contact_name %></small><% } %>
+      </label>
+      <label class="field" id="field-email">
+        <span>E-mail (kötelező)</span>
+        <input name="email" type="email" required maxlength="160" autocomplete="email" value="<%= v.email || '' %>" aria-invalid="<%= e.email ? 'true' : 'false' %>">
+        <% if (e.email) { %><small class="field-error"><%= e.email %></small><% } %>
+      </label>
+      <label class="field" id="field-phone">
+        <span>Telefon (kötelező)</span>
+        <input name="phone" type="tel" required maxlength="40" autocomplete="tel" value="<%= v.phone || '' %>" aria-invalid="<%= e.phone ? 'true' : 'false' %>">
+        <% if (e.phone) { %><small class="field-error"><%= e.phone %></small><% } %>
+      </label>
+      <% if (briefMode) { %>
+      <label class="field span-2" id="field-note">
+        <span>Mit telepítenek vagy alakítanak át</span>
+        <textarea class="note-short" name="note" maxlength="4000"><%= v.note || '' %></textarea>
+      </label>
+      <% } %>
+    </div>
+  </fieldset>
+
+  <% var techError = e.industry || e.project_type || e.location; %>
+  <% if (briefMode) { %><details class="brief-more"<% if (techError) { %> open<% } %>><summary>Részletes műszaki adatok</summary><% } %>
+
+  <fieldset>
+    <legend>A feladat, ha már ismert</legend>
+    <div class="form-grid">
+      <label class="field" id="field-industry">
+        <span>Iparág</span>
+        <select name="industry" aria-invalid="<%= e.industry ? 'true' : 'false' %>">
+          <option value="" <%= v.industry ? '' : 'selected' %>>Még nem tudom</option>
+          <% options.INDUSTRIES.forEach(function (item) { %>
+            <option value="<%= item[0] %>" <%= v.industry === item[0] ? 'selected' : '' %>><%= item[1] %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label class="field" id="field-project_type">
+        <span>Projekt típusa</span>
+        <select name="project_type">
+          <option value="" <%= v.project_type ? '' : 'selected' %>>Még nem tudom</option>
+          <% options.PROJECT_TYPES.forEach(function (item) { %>
+            <option value="<%= item[0] %>" <%= v.project_type === item[0] ? 'selected' : '' %>><%= item[1] %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label class="field" id="field-location">
+        <span>Helyszín</span>
+        <input name="location" maxlength="200" value="<%= v.location || '' %>" placeholder="Település, üzem vagy csarnok">
+      </label>
+      <label class="field" id="field-schedule">
+        <span>Tervezett ütemezés</span>
+        <input name="schedule" maxlength="300" value="<%= v.schedule || '' %>" placeholder="Ha még nincs dátum, hagyja üresen">
+      </label>
+      <label class="field span-2" id="field-access_window">
+        <span>Hozzáférési időablak</span>
+        <input name="access_window" maxlength="300" value="<%= v.access_window || '' %>" placeholder="Melyik műszakban járható a zóna, kell-e kíséret">
+      </label>
+      <div class="field span-2" id="field-requested_output">
+        <span>Kért kimenet</span>
+        <div class="checks">
+          <% options.OUTPUTS.forEach(function (item) { %>
+            <label class="check">
+              <input type="checkbox" name="requested_output" value="<%= item[0] %>" <%= outs.indexOf(item[0]) !== -1 ? 'checked' : '' %>>
+              <span><%= item[1] %></span>
+            </label>
+          <% }) %>
+        </div>
+      </div>
+      <label class="field" id="field-coordinate_system">
+        <span>Koordinátarendszer</span>
+        <select name="coordinate_system">
+          <option value="">Még nem tudom</option>
+          <% options.COORDS.forEach(function (item) { %>
+            <option value="<%= item[0] %>" <%= v.coordinate_system === item[0] ? 'selected' : '' %>><%= item[1] %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label class="field" id="field-accuracy_need">
+        <span>Pontossági igény</span>
+        <select name="accuracy_need">
+          <option value="">Még nem tudom</option>
+          <% options.ACCURACY.forEach(function (item) { %>
+            <option value="<%= item[0] %>" <%= v.accuracy_need === item[0] ? 'selected' : '' %>><%= item[1] %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label class="field span-2" id="field-file_size">
+        <span>Becsült fájlméret</span>
+        <select name="file_size">
+          <option value="">Még nem tudom</option>
+          <% options.FILE_SIZES.forEach(function (item) { %>
+            <option value="<%= item[0] %>" <%= v.file_size === item[0] ? 'selected' : '' %>><%= item[1] %></option>
+          <% }) %>
+        </select>
+      </label>
+    </div>
+  </fieldset>
+
+  <% if (briefMode) { %></details><% } else { %>
+  <fieldset>
+    <legend>Megjegyzés</legend>
+    <label class="field" id="field-note">
+      <span>Mit telepítenek vagy alakítanak át</span>
+      <textarea name="note" maxlength="4000"><%= v.note || '' %></textarea>
+    </label>
+  </fieldset>
+  <% } %>
+
+  <div class="field" id="field-gdpr">
+    <label class="check">
+      <input type="checkbox" name="gdpr" value="igen" required <%= v.gdpr ? 'checked' : '' %> aria-invalid="<%= e.gdpr ? 'true' : 'false' %>">
+      <span>Elfogadom, hogy az <%= company.shortName %> a projektigényben megadott adatokat a kapcsolatfelvétel és az ajánlat előkészítése céljából kezelje. A részletek az <a href="/adatvedelem">adatkezelési tájékoztatóban</a> olvashatók.</span>
+    </label>
+    <% if (e.gdpr) { %><small class="field-error"><%= e.gdpr %></small><% } %>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit"><%= briefMode ? 'Felmérést egyeztetek' : 'Projektigény elküldése' %></button>
+    <p class="hint">A projektigény beküldése nem jelent megrendelést.</p>
+  </div>
+</form>

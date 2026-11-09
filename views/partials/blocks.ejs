@@ -1,0 +1,60 @@
+<% (blocks || []).forEach(function (block) { %>
+  <% if (block.type === 'limit') { %>
+    <aside class="limit">
+      <h2><%= block.title %></h2>
+      <ul>
+        <% block.items.forEach(function (item) { %><li><%- inline(item) %></li><% }) %>
+      </ul>
+    </aside>
+  <% } else if (block.type === 'note') { %>
+    <aside class="note">
+      <h2><%= block.title %></h2>
+      <% block.paragraphs.forEach(function (para) { %><p><%- inline(para) %></p><% }) %>
+    </aside>
+  <% } else if (block.type === 'steps') { %>
+    <section class="block">
+      <% if (block.h2) { %><h2><%= block.h2 %></h2><% } %>
+      <ol class="steps">
+        <% block.items.forEach(function (step, index) { %>
+          <li>
+            <span class="step-no"><%= index + 1 %></span>
+            <div>
+              <h3><%= step.title %></h3>
+              <p><%= step.text %></p>
+            </div>
+          </li>
+        <% }) %>
+      </ol>
+    </section>
+  <% } else if (block.type === 'table') { %>
+    <section class="block">
+      <div class="table-wrap">
+        <table>
+          <% if (block.caption) { %><caption><%= block.caption %></caption><% } %>
+          <thead>
+            <tr>
+              <% block.headers.forEach(function (header) { %><th scope="col"><%= header %></th><% }) %>
+            </tr>
+          </thead>
+          <tbody>
+            <% block.rows.forEach(function (row) { %>
+              <tr>
+                <% row.forEach(function (cell) { %><td><%= cell %></td><% }) %>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  <% } else { %>
+    <section class="block">
+      <% if (block.h2) { %><h2><%= block.h2 %></h2><% } %>
+      <% (block.paragraphs || []).forEach(function (para) { %><p><%- inline(para) %></p><% }) %>
+      <% if (block.list) { %>
+        <ul>
+          <% block.list.forEach(function (item) { %><li><%- inline(item) %></li><% }) %>
+        </ul>
+      <% } %>
+    </section>
+  <% } %>
+<% }) %>

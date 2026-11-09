@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400">
+  <title>Munkacsomag szerkezete</title>
+  <rect width="640" height="400" fill="#faf8f4"/>
+  <rect x="150" y="90" width="340" height="200" fill="#e7e2d8" stroke="#1e3d38"/>
+  <rect x="170" y="70" width="340" height="200" fill="#f6e4d8" stroke="#8f3d16"/>
+  <rect x="190" y="50" width="340" height="200" fill="#fff" stroke="#1e3d38" stroke-width="2"/>
+  <text x="214" y="100" fill="#1a2420" font-family="Segoe UI, sans-serif" font-size="18">Pontfelhő</text>
+  <text x="214" y="140" fill="#1a2420" font-family="Segoe UI, sans-serif" font-size="18">Terepi jegyzék</text>
+  <text x="214" y="180" fill="#1a2420" font-family="Segoe UI, sans-serif" font-size="18">Nyitott kérdések</text>
+  <text x="150" y="340" fill="#3e4c47" font-family="Segoe UI, sans-serif" font-size="14">A csomag szerkezete. Nem egy konkrét megbízás anyaga.</text>
+</svg>

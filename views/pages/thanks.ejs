@@ -1,0 +1,14 @@
+<div class="wrap page">
+  <article class="prose">
+    <p class="kicker">Visszaigazolás</p>
+    <% if (ref) { %>
+      <h1>A projektigényt rögzítettük</h1>
+      <p>Azonosító: <strong><%= ref %></strong></p>
+      <p>Automatikus árat nem készítünk, és a rendszer szerződést nem köt. A választ akkor tudjuk megadni, ha a feladat határa, a hozzáférés és a kért kimenet áttekinthető. Ha ehhez kérdésünk van, a megadott elérhetőségen jelentkezünk.</p>
+    <% } else { %>
+      <h1>A beküldést fogadtuk</h1>
+      <p>Ha a mezők rendben voltak, a projektigény a nyilvántartásba került. Azonnali árat ebből sem állítunk elő.</p>
+    <% } %>
+    <p><a href="/">Vissza a főoldalra</a></p>
+  </article>
+</div>
