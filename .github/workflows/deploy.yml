@@ -1,0 +1,21 @@
+name: Deploy Site 8 to VPS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ 195.228.152.141 }}
+          username: ${{ vmvrgohu}}
+          key: ${{ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrG5TUtKZC8S55XeewXceN2v45PwboP/t/K/3r8tEiGxGHEeSwnlUJ+TGGtcLRvaKgOqoRlFErf3ckB/YNYIZDLAOZLD/5IPU4SqtfEzjEF40W479x7I/7l5AVfr43vx6WkP5+mQPwY6CTWwmkiiEaxyhjwf6JnJHpbV49efhn5hhMDZVhOgidzVGOoFZBu7YnrWw68piFHMFtDj9uUmGn+N6vTHtHL2udL23h2pvIx1l3Nb2+bhq8SJTB84eTO0S7rPuU/cfPVObfUoXWerExb8ySvZHJfeiP9qT/ooBgcJSAojaI9DtdDbtq7Me94LtVTGTj1YYv3C31yclzCpGZ site-5-scenario-deploy >> ~/.ssh/authorized_keys }}
+          script: |
+            cd /var/www/site-8
+            git pull origin main
+            npm install
+            pm2 restart site-8-hatekony3dfelmeres
