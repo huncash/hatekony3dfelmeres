@@ -1,13 +1,14 @@
-import { config } from '../config.js';
+import { config, PUBLIC_ORIGIN } from '../config.js';
 import { jsonLd } from './html.js';
+import { absolutePublic } from './indexing.js';
 
 export function organizationNode() {
   return {
     '@type': 'Organization',
-    '@id': `${config.siteUrl}/#ceg`,
+    '@id': `${PUBLIC_ORIGIN}/#ceg`,
     name: config.company.shortName,
     legalName: config.company.legalName,
-    url: config.siteUrl,
+    url: PUBLIC_ORIGIN,
     email: config.contactEmail,
     telephone: config.phone,
     taxID: config.company.taxId,
@@ -21,25 +22,14 @@ export function organizationNode() {
   };
 }
 
-export function professionalServiceNode() {
+export function websiteNode() {
   return {
-    '@type': 'ProfessionalService',
-    '@id': `${config.siteUrl}/#szolgaltatas`,
+    '@type': 'WebSite',
+    '@id': `${PUBLIC_ORIGIN}/#weboldal`,
     name: config.siteName,
-    url: config.siteUrl,
-    image: `${config.siteUrl}/og.png`,
-    description: 'Meglévő ipari terek felmérése géptelepítéshez és átépítéshez, az üzemi működéshez igazított terepi munkával.',
-    provider: { '@id': `${config.siteUrl}/#ceg` },
-    areaServed: { '@type': 'Country', name: 'Magyarország' },
-    serviceType: [
-      'Ipari térfelmérés',
-      'Csarnok felmérés',
-      'Géptelepítéshez rendelkezésre álló tér felmérése',
-      'Gépészeti tér felmérése',
-      'Raktárátalakítás felmérése',
-    ],
-    email: config.contactEmail,
-    telephone: config.phone,
+    url: `${PUBLIC_ORIGIN}/`,
+    inLanguage: 'hu-HU',
+    publisher: { '@id': `${PUBLIC_ORIGIN}/#ceg` },
   };
 }
 
@@ -62,7 +52,7 @@ export function faqNode(items) {
 }
 
 export function breadcrumbNode(crumbs, canonical) {
-  const list = [{ name: 'Főoldal', url: `${config.siteUrl}/` }, ...crumbs];
+  const list = [{ name: 'Főoldal', url: absolutePublic('/') }, ...crumbs];
   if (canonical && list.length) list[list.length - 1] = { ...list[list.length - 1], url: canonical };
   return {
     '@type': 'BreadcrumbList',
@@ -81,12 +71,12 @@ export function articleNode(article, canonical) {
     headline: article.title,
     description: article.metaDescription,
     datePublished: article.date,
-    dateModified: article.date,
+    dateModified: article.modified || article.date,
     inLanguage: 'hu-HU',
     mainEntityOfPage: canonical,
-    author: { '@id': `${config.siteUrl}/#ceg` },
-    publisher: { '@id': `${config.siteUrl}/#ceg` },
-    image: `${config.siteUrl}/og.png`,
+    author: { '@id': `${PUBLIC_ORIGIN}/#ceg` },
+    publisher: { '@id': `${PUBLIC_ORIGIN}/#ceg` },
+    image: absolutePublic(article.image || '/og.png'),
   };
 }
 
@@ -96,7 +86,7 @@ export function serviceNode(name, description, canonical) {
     name,
     description,
     url: canonical,
-    provider: { '@id': `${config.siteUrl}/#ceg` },
+    provider: { '@id': `${PUBLIC_ORIGIN}/#ceg` },
     areaServed: 'HU',
   };
 }

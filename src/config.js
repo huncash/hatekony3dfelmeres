@@ -14,6 +14,22 @@ function flag(value, fallback = false) {
   return ['1', 'true', 'yes', 'on'].includes(String(value).toLowerCase());
 }
 
+function verificationToken(value) {
+  const text = String(value || '').trim();
+  return /^[A-Za-z0-9_-]{8,128}$/.test(text) ? text : '';
+}
+
+export const PUBLIC_ORIGIN = 'https://hatekony3dfelmeres.hu';
+
+function isProductionOrigin(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.hostname === 'hatekony3dfelmeres.hu' && url.port === '';
+  } catch {
+    return false;
+  }
+}
+
 const port = Number(process.env.PORT || 8000);
 
 export const config = {
@@ -51,6 +67,11 @@ export const config = {
   hostingNote: process.env.HOSTING_NOTE || '',
   nodeEnv: process.env.NODE_ENV || 'development',
   contentDate: '2026-11-09',
+  indexable: (process.env.NODE_ENV === 'production')
+    && flag(process.env.ALLOW_INDEX, false)
+    && isProductionOrigin(stripSlash(process.env.SITE_URL || PUBLIC_ORIGIN)),
+  googleSiteVerification: verificationToken(process.env.GOOGLE_SITE_VERIFICATION),
+  bingSiteVerification: verificationToken(process.env.BING_SITE_VERIFICATION),
 };
 
 export function assertRuntime() {

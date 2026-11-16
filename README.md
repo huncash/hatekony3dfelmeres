@@ -133,6 +133,23 @@ A projektigény mezői: beküldés időpontja, forrásdomain, forrás URL, campa
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` | Levélküldés |
 | `ADMIN_TOKEN` | Az admin jelszava |
 | `SESSION_SECRET` | A süti aláírása; ha üres, az `ADMIN_TOKEN` a titok |
+| `ALLOW_INDEX` | Éles indexelés. Csak `NODE_ENV=production` és `https://hatekony3dfelmeres.hu` mellett kapcsol be. Helyben mindig noindex. |
+| `GOOGLE_SITE_VERIFICATION` | Search Console URL-előtag meta igazolás. Üresen nincs tag. |
+| `BING_SITE_VERIFICATION` | Bing Webmaster meta igazolás. Üresen nincs tag. |
+
+## Keresés és megosztás
+
+A publikus canonical, az OG-kép és a sitemap mindig `https://hatekony3dfelmeres.hu`. Localhost, `127.0.0.1` és a `:8000` nem kerül a production metaadatba. A `www` és a sima HTTP a nyilvános hoston 301-gyel ide tér. A helyi `127.0.0.1:8000` nem irányít át.
+
+Az éles indexelés külön kapcsoló: a VPS környezetében `NODE_ENV=production` és `ALLOW_INDEX=1`. Amíg ez nincs beállítva, a `robots.txt` mindent tilt, az oldal `noindex`, a sitemap üres. A `/admin` és a `/projektigeny` akkor is noindex, és az admin belépés ettől függetlenül jelszóhoz kötött.
+
+Search Console domain property: a DNS-zónában egy TXT rekord, a Search Console által kiírt értékkel, a `hatekony3dfelmeres.hu` gyökerén. Ezt a tokent a repó nem tartalmazza. URL-előtagos tulajdont a `GOOGLE_SITE_VERIFICATION` meta tag igazol. Igazolás és `ALLOW_INDEX=1` után a beküldendő sitemap: `https://hatekony3dfelmeres.hu/sitemap.xml`. URL Inspection a főoldalra, a három szolgáltatásoldalra és a `/cikkek/3d-felmeres-mukodo-uzemben` címre.
+
+Bing Webmaster: ugyanaz a sitemap. IndexNow nincs bekötve, azonnali indexelést nem ígérünk.
+
+A Google Cégprofil a meglévő vrgo.hu vállalkozás. Ebből a repóból nem készül új profil, és nem írjuk felül a nevet, a címet, a kategóriát, a fő weboldalt vagy a nyitvatartást. Nyitvatartás nincs publikálva: a telefonos elérhetőség nem ügyfélfogadás.
+
+A favicon a Hatékony 3D felmérés jelölése, jóváhagyásra vár. Az OG-borító és a működő üzemi cikk borítója sematikus ábra, nem referenciafotó.
 
 ## Ellenőrzés
 

@@ -1,4 +1,5 @@
 import { config } from '../config.js';
+import { absolutePublic } from '../lib/indexing.js';
 import { campaignText, toCsv } from '../lib/csv.js';
 import { ACCURACY, COORDS, FILE_SIZES, INDUSTRIES, OUTPUTS, PROJECT_TYPES, STATUSES, labelOf, labelsOf, statusLabel } from '../lib/options.js';
 import { sendPage } from '../lib/render.js';
@@ -33,7 +34,7 @@ function adminMeta(path) {
     noindex: true,
     metaTitle: 'Nyilvántartás | Hatékony 3D felmérés',
     metaDescription: 'A projektigények zárt nyilvántartása.',
-    canonical: `${config.siteUrl}${path}`,
+    canonical: absolutePublic(path),
     jsonLd: '',
   };
 }

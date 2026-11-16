@@ -8,8 +8,8 @@ export const services = [
     cardText: 'A rendelkezésre álló tér és releváns meglévő környezet rögzítése.',
     kicker: 'Szolgáltatás',
     h1: 'Géptelepítés előkészítése meglévő térben',
-    metaTitle: 'Géptelepítés előkészítése meglévő csarnokban | Hatékony 3D felmérés',
-    metaDescription: 'Meglévő csarnok felmérése géptelepítés előtt: fogadó zóna, bejutási út, alap és közműkiállás. Üzemi időablakkal, dokumentált hiánnyal, automatikus ár nélkül.',
+    metaTitle: 'Géptelepítés előtti térfelmérés | Hatékony 3D felmérés',
+    metaDescription: 'Géptelepítés előtti térfelmérés a fogadó helyről és a bejutási útról. A rendelkezésre álló teret és a releváns meglévő környezetet rögzítjük.',
     lede: 'Amikor egy gép, egy cella vagy egy sor egy már működő csarnokba kerül, a kritikus kérdés nem a szkenner márkája. Az, hogy a fogadó hely és a bejutási út tényleg az-e, amit a rajz mutat, és hogy ezt a termelés rendjéhez igazítva lehet-e felmérni.',
     blocks: [
       {
@@ -66,8 +66,8 @@ export const services = [
     cardText: 'Tartószerkezetek, közlekedési terek és meglévő elrendezés felmérése.',
     kicker: 'Szolgáltatás',
     h1: 'Csarnok- és raktárátalakítás felmérése',
-    metaTitle: 'Csarnok- és raktárátalakítás felmérése | Hatékony 3D felmérés',
-    metaDescription: 'Működő csarnok és raktár felmérése átalakításhoz: polcsor, dokk, közlekedés, oszloprács. Műszakhoz igazított hozzáférés, dokumentált takarással.',
+    metaTitle: 'Csarnokfelmérés átalakításhoz | Hatékony 3D felmérés',
+    metaDescription: 'Csarnok- és raktárfelmérés átalakításhoz: tartószerkezet, közlekedési tér és a meglévő elrendezés. A hozzáférés a műszakhoz igazodik, a takarás dokumentált.',
     lede: 'A raktár átalakítása ritkán üres épületben történik. A polc még árut tart, a dokknál még érkezik az autó, a tervező pedig egy olyan alaprajzból dolgozna, amely a legutóbbi polcátrendezést már nem tartalmazza. A felmérésnek ebben a rendben kell elférnie.',
     blocks: [
       {
@@ -115,8 +115,8 @@ export const services = [
     cardText: 'Hozzáférhető csövek, vezetékek és kapcsolódó térbeli elemek rögzítése.',
     kicker: 'Szolgáltatás',
     h1: 'Gépészeti környezet dokumentálása',
-    metaTitle: 'Gépészeti tér rekonstrukciójának felmérése | Hatékony 3D felmérés',
-    metaDescription: 'Ipari gépészeti terek felmérése rekonstrukcióhoz: kazánház, csőtartó, kezelőjárda. Látható geometria, dokumentált takarás, egyeztetett üzemi ablak.',
+    metaTitle: 'Meglévő gépészeti környezet felmérése | Hatékony 3D felmérés',
+    metaDescription: 'Meglévő gépészeti környezet felmérése: hozzáférhető csövek, vezetékek és kapcsolódó térbeli elemek. Látható geometria, dokumentált takarás.',
     lede: 'A gépészeti rekonstrukció ott nehéz, ahol a következő tervezőnek a meglévő vezeték, a kezelőjárda és a szabad szerelési hely kell, nem egy látványkép. Ezek a terek szűkek, melegek, és gyakran csak kísérettel járhatók.',
     blocks: [
       {
@@ -275,15 +275,13 @@ export const pricingPage = {
 export const samplesPage = {
   path: '/minta-anyagok',
   kicker: 'Kimenet',
-  h1: 'Minta anyagok és referenciák',
-  metaTitle: 'Minta anyagok és kimenetek | Hatékony 3D felmérés',
-  metaDescription: 'Három kimenet szerkezete: pontfelhő, terepi dokumentáció és egyeztetett munkacsomag. Névvel vállalt referencia csak a megrendelő engedélyével kerül fel.',
-  lede: 'A minta a munka szerkezetét mutatja, nem egy konkrét megrendelő üzemét. Névvel vállalt referenciát csak írásos hozzájárulás után teszünk közzé. Addig sem állítunk be idegen csarnokot saját eredménynek.',
+  h1: 'Átadási anyagok',
+  metaTitle: 'Átadási anyagok | Hatékony 3D felmérés',
+  metaDescription: 'A vállalható kimenet a színezett pontfelhő, a terepi jegyzék és az egyeztetett munkacsomag. Közzétett minta és referenciafotó csak a megrendelő engedélyével kerülne fel.',
+  lede: 'Ezen az oldalon nincs közzétett felmérési minta. A három kimenet akkor készül el, ha a megbízás rögzíti. Referenciafotót a megrendelő engedélye nélkül nem mutatunk.',
   outputs: [
     {
       title: 'Színezett pontfelhő',
-      image: '/images/kimenet-pontfelho.svg',
-      alt: 'Sematikus ábra: oszlopok és egy gép körvonala pontokkal. Nem valós mérési anyag.',
       paragraphs: [
         'A vállalt zóna álláspontjai egyeztetett rendszerben, kimondott mértékegységgel és fájllistával. Ahol a termelés vagy a szigetelés takart, a pontfelhő ott lyukas marad. A lyuk nem hiba, ha a jegyzék megmondja az okát.',
         'A formátumot a fogadó szoftverhez kötjük. A színezett pontfelhő nem panorámakép, nem textúrázott felületmodell és nem BIM-modell. Akkor része az átadásnak, ha a megbízás így rögzíti.',
@@ -291,17 +289,13 @@ export const samplesPage = {
     },
     {
       title: 'Terepi dokumentáció',
-      image: '/images/kimenet-jegyzek.svg',
-      alt: 'Sematikus ábra: helyszíni jegyzék sorai zónáról, időablakról és takarásról. Nem valós jegyzőkönyv.',
       paragraphs: [
         'Bejárási jegyzék: melyik zónában jártunk, melyik időablakban, ki kísért, mit takart áru vagy gép. A kritikus szűkületről akkor készül fénykép, ha a helyszín szabálya a fényképezést engedi.',
-        'A jegyzék mondja ki, mi látszott és mi nem. Ebből a kivitelező tudja, hol dönthet, és hol kell még egyszer hozzáférni. A szép, de magyarázat nélküli kép ezt nem helyettesíti.',
+        'A jegyzék mondja ki, mi látszott és mi nem. Ebből a kivitelező tudja, hol dönthet, és hol kell még egyszer hozzáférni.',
       ],
     },
     {
       title: 'Egyeztetett munkacsomag a további tervezéshez',
-      image: '/images/kimenet-munkacsomag.svg',
-      alt: 'Sematikus ábra: három egymásra tett anyag, pontfelhő, jegyzék és nyitott kérdések. Nem valós projektcsomag.',
       paragraphs: [
         'A pontfelhő és a jegyzék együtt, a feladatban megnevezett döntésekhez rendelve. Külön lista szól arról, mi használható a tervezéshez, és mi igényel újabb hozzáférést. Az átadás üteme — melyik fájl mikor — a megbízás része.',
         'A csomag nem tervezési műleírás és nem kiviteli terv. A tervező a saját szakágában dönt. Mi a meglévő teret és a korlátokat adjuk át.',

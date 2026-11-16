@@ -8,6 +8,7 @@ import { openDatabase } from './lib/db.js';
 import { formatDay, formatStamp } from './lib/format.js';
 import { inlineHtml } from './lib/html.js';
 import { createLogger } from './lib/mail.js';
+import { absolutePublic, canonicalRedirectTarget } from './lib/indexing.js';
 import { resolveDatabasePath, telHref } from './lib/paths.js';
 import { listenersOn, reportBusyPort } from './lib/port.js';
 import { registerAdmin } from './routes/admin.js';
@@ -52,6 +53,22 @@ app.use((req, res, next) => {
   })(req, res, next);
 });
 
+app.use((req, res, next) => {
+  const target = canonicalRedirectTarget({
+    method: req.method,
+    host: req.headers.host,
+    proto: req.headers['x-forwarded-proto'] || req.protocol,
+    url: req.originalUrl,
+  });
+  if (target) {
+    res.redirect(301, target);
+    return;
+  }
+  const closed = !config.indexable || req.path.startsWith('/admin') || req.path.startsWith('/projektigeny') || req.path === '/healthz';
+  if (closed) res.set('X-Robots-Tag', 'noindex, nofollow');
+  next();
+});
+
 app.use(compression());
 app.use(express.urlencoded({ extended: false, limit: '64kb' }));
 app.use(express.static(path.join(config.root, 'public'), {
@@ -65,7 +82,13 @@ app.use((req, res, next) => {
     return;
   }
   res.locals.siteName = config.siteName;
-  res.locals.siteUrl = config.siteUrl;
+  res.locals.siteUrl = absolutePublic('/');
+  res.locals.ogImage = absolutePublic('/og.png');
+  res.locals.ogImageAlt = 'Hatékony 3D felmérés: ipari csarnok és gépészeti környezet sematikus térfelmérése átépítéshez.';
+  res.locals.ogImageWidth = 1200;
+  res.locals.ogImageHeight = 630;
+  res.locals.googleSiteVerification = config.googleSiteVerification;
+  res.locals.bingSiteVerification = config.bingSiteVerification;
   res.locals.email = config.contactEmail;
   res.locals.phone = config.phone;
   res.locals.phoneHref = telHref(config.phone);
@@ -105,7 +128,7 @@ app.use((req, res) => {
       noindex: true,
       metaTitle: 'Az oldal nem található | Hatékony 3D felmérés',
       metaDescription: 'A kért cím nem található a hatekony3dfelmeres.hu oldalon.',
-      canonical: `${config.siteUrl}${req.path}`,
+      canonical: absolutePublic(req.path),
       jsonLd: '',
     });
   });

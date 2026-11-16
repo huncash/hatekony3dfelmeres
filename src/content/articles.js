@@ -291,7 +291,7 @@ export const articles = [
       },
     ],
     related: [
-      { href: '/minta-anyagok', label: 'Minta anyagok' },
+      { href: '/minta-anyagok', label: 'Átadási anyagok' },
       { href: '/gepeszeti-ter-rekonstrukcio', label: 'Gépészeti tér, ahol a takarás gyakori' },
       { href: '/gyik', label: 'Gyakori kérdések' },
     ],
@@ -300,9 +300,12 @@ export const articles = [
     slug: '3d-felmeres-mukodo-uzemben',
     title: 'Lehet 3D felmérést végezni működő üzemben?',
     metaTitle: '3D felmérés működő üzemben | Hatékony 3D felmérés',
-    metaDescription: 'Mikor mérhető fel egy ipari tér üzemmenet mellett? Hozzáférés, takarások, rezgések és egyeztetett mérési időablakok közérthetően.',
+    metaDescription: 'Működő üzemben végzett térfelmérés: hozzáférés, takarás, rezgés és egyeztetett mérési időablak. Pontos mérés lehetséges, nulla leállást nem ígérünk.',
     excerpt: 'Nem feltétlenül kell leállítani az üzemet. Megmutatjuk, milyen hozzáférés és előkészítés szükséges a használható felméréshez.',
     date: '2026-11-09',
+    modified: '2026-11-16',
+    image: '/images/og-mukodo-uzem.png',
+    imageAlt: 'Sematikus ipari csarnok mérési időablakkal. Az ábra a hozzáférést mutatja, nem leállásmentes szolgáltatást.',
     lede: 'Igen, ha a zóna járható, a műszer állása stabil, és előre megvan, mit takar a termelés. A teljes leállás nem előfeltétel. Nulla termeléskiesést sem vállalunk: az ablak hosszát és a feladat terjedelmét előre vetjük össze.',
     blocks: [
       {

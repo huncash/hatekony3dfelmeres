@@ -221,7 +221,7 @@ main { padding: 1.15rem 0 2.2rem; }
 .actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem; }
 .section { margin-top: 1.55rem; }
 .section-link { margin-top: 0.7rem; }
-.cards, .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.75rem; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.75rem; }
 .card, .side-card, .note, .limit, .trust, .admin-card {
   background: var(--paper);
   border: 1px solid var(--line);
@@ -275,18 +275,7 @@ table { width: 100%; border-collapse: collapse; min-width: 32rem; }
 caption { text-align: left; padding: 0.65rem 0.75rem 0; color: var(--muted); font-size: 0.875rem; }
 th, td { text-align: left; vertical-align: top; padding: 0.55rem 0.7rem; border-top: 1px solid var(--line); }
 th { background: var(--brand); color: var(--white); border-top: 0; font-weight: 650; }
-.schematic { margin: 0.6rem 0 0; background: var(--paper); border: 1px solid var(--line); padding: 0.45rem; max-width: 36rem; }
-.schematic figcaption, .photo-slot figcaption { color: var(--muted); font-size: 0.875rem; margin-top: 0.4rem; }
 .sample { margin-top: 1.3rem; }
-.photo-slot {
-  margin: 0;
-  min-height: 7.5rem;
-  display: grid;
-  align-items: end;
-  padding: 0.7rem;
-  background: #e8eeed;
-  border: 1px dashed #8ea09e;
-}
 .article-list { display: grid; gap: 0.15rem; }
 .article-list article { border-top: 1px solid var(--line); padding: 0.75rem 0; }
 .article-list h2 { font-size: 1.25rem; margin: 0.15rem 0 0; }

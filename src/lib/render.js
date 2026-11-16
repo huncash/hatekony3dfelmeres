@@ -4,7 +4,7 @@ import { escapeHtml } from './html.js';
 const failHtml = `<!doctype html><html lang="hu"><meta charset="utf-8"><title>Hiba</title><body><p>Az oldal most nem tölthető be. Írjon a ${escapeHtml(config.contactEmail)} címre.</p></body></html>`;
 
 export function sendPage(res, view, data = {}) {
-  const model = { ...res.locals, ...data, noindex: Boolean(data.noindex) };
+  const model = { ...res.locals, ...data, noindex: Boolean(data.noindex) || !config.indexable };
   res.set('Cache-Control', 'no-store');
   res.app.render(view, model, (err, body) => {
     if (err) {

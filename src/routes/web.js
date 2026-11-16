@@ -2,13 +2,14 @@ import { config } from '../config.js';
 import { articles, articleBySlug } from '../content/articles.js';
 import { faqs, homeFaqs } from '../content/faq.js';
 import { privacyPage, imprintPage, termsPage } from '../content/legal.js';
-import { CONTENT_DATE, publicRoutes } from '../content/catalog.js';
+import { publicRoutes, routeByPath } from '../content/catalog.js';
 import { pricingPage, processPage, samplesPage, services, techPage } from '../content/pages.js';
 import { serviceNav } from '../content/sidebar.js';
 import { ACCURACY, COORDS, FILE_SIZES, INDUSTRIES, OUTPUTS, PROJECT_TYPES } from '../lib/options.js';
 import { sendPage } from '../lib/render.js';
 import { clientIp, issueFormToken, rateLimit, sameOrigin, signRef, verifyFormToken, verifyRef } from '../lib/security.js';
-import { articleNode, breadcrumbNode, faqNode, graph, organizationNode, professionalServiceNode, serviceNode } from '../lib/seo.js';
+import { absolutePublic, robotsText, sitemapXml } from '../lib/indexing.js';
+import { articleNode, breadcrumbNode, faqNode, graph, organizationNode, serviceNode, websiteNode } from '../lib/seo.js';
 import { validateLead } from '../lib/validate.js';
 import { notifyLead } from '../lib/mail.js';
 
@@ -33,17 +34,23 @@ function formBag(req, extra = {}) {
 function schemaCrumbs(crumbs, canonical) {
   return breadcrumbNode(crumbs.map((crumb, index) => ({
     name: crumb.name,
-    url: index === crumbs.length - 1 ? canonical : `${config.siteUrl}${crumb.href || ''}`,
+    url: index === crumbs.length - 1 ? canonical : absolutePublic(crumb.href || '/'),
   })), canonical);
 }
 
 function renderHome(req, res, extra = {}) {
-  const canonical = `${config.siteUrl}/`;
+  const page = routeByPath('/');
+  const canonical = absolutePublic('/');
   sendPage(res, 'pages/home', {
-    metaTitle: '3D felmérés ipari átépítéshez | Hatékony 3D felmérés',
-    metaDescription: 'Meglévő terek rögzítése géptelepítéshez és átalakításhoz, az üzemi hozzáféréshez igazítva. Ipari üzemeltetőknek és kivitelezőknek.',
+    metaTitle: page.metaTitle,
+    metaDescription: page.metaDescription,
     canonical,
-    jsonLd: graph([organizationNode(), professionalServiceNode(), faqNode(homeFaqs)]),
+    jsonLd: graph([
+      organizationNode(),
+      websiteNode(),
+      serviceNode('Ipari 3D térfelmérés', page.metaDescription, canonical),
+      faqNode(homeFaqs),
+    ]),
     services,
     faqs: homeFaqs,
     ...formBag(req, { returnTo: '/', ...extra }),
@@ -51,16 +58,17 @@ function renderHome(req, res, extra = {}) {
 }
 
 function renderContact(req, res, extra = {}) {
-  const canonical = `${config.siteUrl}/kapcsolat`;
+  const page = routeByPath('/kapcsolat');
+  const canonical = absolutePublic('/kapcsolat');
   const crumbs = [{ name: 'Kapcsolat' }];
   sendPage(res, 'pages/contact', {
-    metaTitle: 'Projektigény és helyszíni egyeztetés | Hatékony 3D felmérés',
-    metaDescription: 'Írja le, mit telepítenek vagy alakítanak át. A projektigényt rögzítjük, automatikus árat és szerződést nem küldünk.',
+    metaTitle: page.metaTitle,
+    metaDescription: page.metaDescription,
     canonical,
     crumbs,
     jsonLd: graph([
       organizationNode(),
-      professionalServiceNode(),
+      websiteNode(),
       schemaCrumbs(crumbs, canonical),
     ]),
     ...formBag(req, { returnTo: '/kapcsolat', ...extra }),
@@ -68,7 +76,7 @@ function renderContact(req, res, extra = {}) {
 }
 
 function renderDocument(res, page, crumbs, withService = true, withSidebar = true) {
-  const canonical = `${config.siteUrl}${page.path}`;
+  const canonical = absolutePublic(page.path);
   sendPage(res, 'pages/document', {
     ...page,
     crumbs,
@@ -76,7 +84,7 @@ function renderDocument(res, page, crumbs, withService = true, withSidebar = tru
     canonical,
     jsonLd: graph([
       organizationNode(),
-      professionalServiceNode(),
+      websiteNode(),
       withService ? serviceNode(page.h1, page.metaDescription, canonical) : null,
       schemaCrumbs(crumbs, canonical),
     ]),
@@ -89,46 +97,33 @@ export function registerWeb(app, { db, logger }) {
   });
 
   app.get('/robots.txt', (req, res) => {
-    res.type('text/plain').send([
-      'User-agent: *',
-      'Allow: /',
-      'Disallow: /admin',
-      'Disallow: /projektigeny',
-      `Sitemap: ${config.siteUrl}/sitemap.xml`,
-      '',
-    ].join('\n'));
+    res.type('text/plain').send(robotsText(config.indexable));
   });
 
   app.get('/sitemap.xml', (req, res) => {
-    const urls = publicRoutes().map((route) => [
-      '  <url>',
-      `    <loc>${config.siteUrl}${route.path}</loc>`,
-      `    <lastmod>${CONTENT_DATE}</lastmod>`,
-      `    <priority>${route.priority}</priority>`,
-      '  </url>',
-    ].join('\n')).join('\n');
-    res.type('application/xml').send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
+    res.type('application/xml').send(sitemapXml(publicRoutes(), config.indexable));
   });
 
   app.get('/', (req, res) => renderHome(req, res));
 
   app.get('/szolgaltatasok', (req, res) => {
-    const canonical = `${config.siteUrl}/szolgaltatasok`;
+    const page = routeByPath('/szolgaltatasok');
+    const canonical = absolutePublic('/szolgaltatasok');
     const crumbs = [{ name: 'Szolgáltatások' }];
     const cards = serviceNav.map((item) => {
-      const service = services.find((page) => page.path === item.href);
+      const service = services.find((entry) => entry.path === item.href);
       return { href: item.href, label: item.label, text: service.cardText };
     });
     sendPage(res, 'pages/services', {
-      metaTitle: 'Szolgáltatások | Hatékony 3D felmérés',
-      metaDescription: 'Géptelepítés előkészítése, csarnok- és raktárátalakítás, valamint gépészeti terek felmérése. A kártyák a menü alpontjaival azonos oldalakra visznek.',
+      metaTitle: page.metaTitle,
+      metaDescription: page.metaDescription,
       canonical,
       crumbs,
       cards,
       jsonLd: graph([
         organizationNode(),
-        professionalServiceNode(),
-        serviceNode('Ipari térfelmérés', 'Meglévő ipari terek felmérése géptelepítéshez, csarnokátalakításhoz és gépészeti rekonstrukcióhoz.', canonical),
+        websiteNode(),
+        serviceNode('Ipari felmérési szolgáltatások', page.metaDescription, canonical),
         schemaCrumbs(crumbs, canonical),
       ]),
     });
@@ -145,15 +140,15 @@ export function registerWeb(app, { db, logger }) {
   });
 
   app.get(samplesPage.path, (req, res) => {
-    const canonical = `${config.siteUrl}${samplesPage.path}`;
-    const crumbs = [{ name: 'Minta anyagok' }];
+    const canonical = absolutePublic(samplesPage.path);
+    const crumbs = [{ name: 'Átadási anyagok' }];
     sendPage(res, 'pages/samples', {
       ...samplesPage,
       crumbs,
       canonical,
       jsonLd: graph([
         organizationNode(),
-        professionalServiceNode(),
+        websiteNode(),
         serviceNode(samplesPage.h1, samplesPage.metaDescription, canonical),
         schemaCrumbs(crumbs, canonical),
       ]),
@@ -165,17 +160,18 @@ export function registerWeb(app, { db, logger }) {
   });
 
   app.get('/gyik', (req, res) => {
-    const canonical = `${config.siteUrl}/gyik`;
+    const page = routeByPath('/gyik');
+    const canonical = absolutePublic('/gyik');
     const crumbs = [{ name: 'GYIK' }];
     sendPage(res, 'pages/faq', {
-      metaTitle: 'Gyakori kérdések az ipari felmérésről | Hatékony 3D felmérés',
-      metaDescription: 'Pontosság, termelés melletti munka, földhivatali záradék, ár és fájlformátum. Őszinte válaszok, általános ígéret nélkül.',
+      metaTitle: page.metaTitle,
+      metaDescription: page.metaDescription,
       canonical,
       crumbs,
       faqs,
       jsonLd: graph([
         organizationNode(),
-        professionalServiceNode(),
+        websiteNode(),
         faqNode(faqs),
         schemaCrumbs(crumbs, canonical),
       ]),
@@ -204,22 +200,23 @@ export function registerWeb(app, { db, logger }) {
   });
 
   app.get('/cikkek', (req, res) => {
-    const canonical = `${config.siteUrl}/cikkek`;
+    const page = routeByPath('/cikkek');
+    const canonical = absolutePublic('/cikkek');
     const crumbs = [{ name: 'Cikkek' }];
     sendPage(res, 'pages/articles', {
-      metaTitle: 'Szakmai cikkek ipari felmérésről | Hatékony 3D felmérés',
-      metaDescription: 'Géptelepítés előtti állapotfelmérés, terepi menet, szükséges adatok, helyszíni bizonytalanság és a pontfelhő ellenőrzése.',
+      metaTitle: page.metaTitle,
+      metaDescription: page.metaDescription,
       canonical,
       crumbs,
       articles,
-      jsonLd: graph([organizationNode(), professionalServiceNode(), schemaCrumbs(crumbs, canonical)]),
+      jsonLd: graph([organizationNode(), websiteNode(), schemaCrumbs(crumbs, canonical)]),
     });
   });
 
   app.get('/cikkek/:slug', (req, res, next) => {
     const article = articleBySlug(req.params.slug);
     if (!article) return next();
-    const canonical = `${config.siteUrl}/cikkek/${article.slug}`;
+    const canonical = absolutePublic(`/cikkek/${article.slug}`);
     const crumbs = [{ name: 'Cikkek', href: '/cikkek' }, { name: article.title }];
     sendPage(res, 'pages/article', {
       article,
@@ -229,9 +226,11 @@ export function registerWeb(app, { db, logger }) {
       canonical,
       crumbs,
       ogType: 'article',
+      ogImage: absolutePublic(article.image || '/og.png'),
+      ogImageAlt: article.imageAlt || 'Hatékony 3D felmérés: ipari terek sematikus felmérése átépítéshez.',
       jsonLd: graph([
         organizationNode(),
-        professionalServiceNode(),
+        websiteNode(),
         articleNode(article, canonical),
         schemaCrumbs(crumbs, canonical),
       ]),
@@ -248,7 +247,7 @@ export function registerWeb(app, { db, logger }) {
         lede: 'Az űrlap nem erről az oldalról érkezett. Nyissa meg újra a kapcsolat oldalt, és onnan küldje el.',
         metaTitle: 'Beküldés elutasítva',
         metaDescription: 'A projektigény forrása nem egyezik az oldallal.',
-        canonical: `${config.siteUrl}/projektigeny`,
+        canonical: absolutePublic('/projektigeny'),
         jsonLd: '',
       });
     }
@@ -262,7 +261,7 @@ export function registerWeb(app, { db, logger }) {
         lede: 'Rövid idő alatt több projektigény érkezett erről a címről. Várjon, majd próbálja újra, vagy írjon e-mailt.',
         metaTitle: 'Túl sok beküldés',
         metaDescription: 'A projektigény űrlap átmenetileg korlátozva van.',
-        canonical: `${config.siteUrl}/projektigeny`,
+        canonical: absolutePublic('/projektigeny'),
         jsonLd: '',
       });
     }
@@ -286,7 +285,7 @@ export function registerWeb(app, { db, logger }) {
     const saved = db.insertLead({
       ...result.value,
       source_domain: result.value.source_domain || req.hostname,
-      source_url: result.value.source_url || req.get('referer') || `${config.siteUrl}${returnTo}`,
+      source_url: result.value.source_url || req.get('referer') || absolutePublic(returnTo),
       referrer: String(req.get('referer') || '').replace(/[\u0000-\u001F]/g, '').slice(0, 500),
       gdpr_consent: 1,
       status: 'uj',
@@ -312,7 +311,7 @@ export function registerWeb(app, { db, logger }) {
       ref: valid ? ref : '',
       metaTitle: valid ? 'Projektigény rögzítve | Hatékony 3D felmérés' : 'Beküldés | Hatékony 3D felmérés',
       metaDescription: 'A projektigény rögzítésének visszaigazolása. Automatikus árat és szerződést nem küldünk.',
-      canonical: `${config.siteUrl}/projektigeny/visszaigazolas`,
+      canonical: absolutePublic('/projektigeny/visszaigazolas'),
       jsonLd: '',
     });
   });
