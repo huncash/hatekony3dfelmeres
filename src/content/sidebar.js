@@ -3,7 +3,7 @@ import { articles } from './articles.js';
 export const serviceNav = [
   { href: '/geptelepites-elokeszites', label: 'Géptelepítés előkészítése' },
   { href: '/csarnok-atalakitas', label: 'Csarnok- és raktárátalakítás' },
-  { href: '/gepeszeti-ter-rekonstrukcio', label: 'Gépészeti terek felmérése' },
+  { href: '/gepeszeti-ter-rekonstrukcio', label: 'Gépészeti környezet dokumentálása' },
 ];
 
 export const campaignCard = {

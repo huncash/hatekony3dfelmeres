@@ -1,9 +1,11 @@
+import { publicExplainers, publicSpeedClaims } from './instruments.js';
+
 export const services = [
   {
     path: '/geptelepites-elokeszites',
     nav: 'Géptelepítés',
     cardTitle: 'Géptelepítés előkészítése',
-    cardText: 'Új gép, cella vagy sor fogadó helye és bejutási útja egy már működő csarnokban. A felmérés a telepítő és a tervező döntéséhez készül.',
+    cardText: 'A rendelkezésre álló tér és releváns meglévő környezet rögzítése.',
     kicker: 'Szolgáltatás',
     h1: 'Géptelepítés előkészítése meglévő térben',
     metaTitle: 'Géptelepítés előkészítése meglévő csarnokban | Hatékony 3D felmérés',
@@ -61,7 +63,7 @@ export const services = [
     path: '/csarnok-atalakitas',
     nav: 'Csarnok',
     cardTitle: 'Csarnok- és raktárátalakítás',
-    cardText: 'Polcsor, dokk, födém vagy közlekedési rend változása úgy, hogy a raktár közben működik. A határ a zóna és a járható időablak.',
+    cardText: 'Tartószerkezetek, közlekedési terek és meglévő elrendezés felmérése.',
     kicker: 'Szolgáltatás',
     h1: 'Csarnok- és raktárátalakítás felmérése',
     metaTitle: 'Csarnok- és raktárátalakítás felmérése | Hatékony 3D felmérés',
@@ -109,10 +111,10 @@ export const services = [
   {
     path: '/gepeszeti-ter-rekonstrukcio',
     nav: 'Gépészet',
-    cardTitle: 'Gépészeti tér rekonstrukciója',
-    cardText: 'Kazánház, vezetéktartó, technológiai folyosó. A látható geometriát és a takarást dokumentáljuk, a szigetelés alatti középvonalat nem találjuk ki.',
+    cardTitle: 'Gépészeti környezet dokumentálása',
+    cardText: 'Hozzáférhető csövek, vezetékek és kapcsolódó térbeli elemek rögzítése.',
     kicker: 'Szolgáltatás',
-    h1: 'Gépészeti tér rekonstrukciója',
+    h1: 'Gépészeti környezet dokumentálása',
     metaTitle: 'Gépészeti tér rekonstrukciójának felmérése | Hatékony 3D felmérés',
     metaDescription: 'Ipari gépészeti terek felmérése rekonstrukcióhoz: kazánház, csőtartó, kezelőjárda. Látható geometria, dokumentált takarás, egyeztetett üzemi ablak.',
     lede: 'A gépészeti rekonstrukció ott nehéz, ahol a következő tervezőnek a meglévő vezeték, a kezelőjárda és a szabad szerelési hely kell, nem egy látványkép. Ezek a terek szűkek, melegek, és gyakran csak kísérettel járhatók.',
@@ -228,12 +230,20 @@ export const pricingPage = {
       caption: 'A díjat ezek a feltételek mozgatják. A táblázat nem árlista.',
       headers: ['Tényező', 'Mit változtat a vállaláson'],
       rows: [
-        ['Zónák száma és távolsága', 'Bejárás hossza, álláspontok, az, hogy egy vagy több kiszállás fér bele.'],
-        ['Üzemi időablak', 'Éjszaka, műszakváltás vagy rövid szünet más felkészülést és más terjedelmet jelent.'],
-        ['Kíséret, oktatás, belépés', 'A hasznos mérési idő rövidül, ha a nap eleje adminisztráció és várakozás.'],
-        ['Kért kontroll', 'A kritikus helyen végzett ellenőrző mérés külön helyszíni idő.'],
-        ['Kimenet mélysége', 'Önmagában a pontfelhő, vagy a jegyzékkel és a nyitott kérdésekkel együtt átadott csomag.'],
-        ['Utazás', 'A helyszín távolsága a kiszállás szervezésének a része, nem rejtett tétel.'],
+        ['Terepi munka', 'A bejárt zóna, az álláspontok és a helyszíni jelenlét. Önálló tétel, nem a feldolgozás része.'],
+        ['Feldolgozás és regisztráció', 'Az álláspontok illesztése és a vállalt határ ellenőrzése a helyszíni nap után.'],
+        ['Átadási formátumok', 'A színezett pontfelhő, a jegyzék és a munkacsomag külön kimenet, ha a megbízás így rögzíti.'],
+        ['Opcionális rajz vagy modellezés', 'Csak akkor, ha külön kérik. Nem része minden felmérésnek, és nem készül el automatikusan.'],
+        ['Különleges hozzáférés vagy munkavégzési idő', 'Kíséret, oktatás, éjszakai vagy rövid műszakablak más felkészülést jelent.'],
+      ],
+    },
+    {
+      type: 'table',
+      caption: 'A helyszíni idő és az átadás határideje két külön vállalás. Egyik sem m²/nap kapacitás.',
+      headers: ['Idő', 'Mit rögzít az ajánlat'],
+      rows: [
+        ['Helyszíni munka időtartama', 'A zóna és a járható időablak után derül ki. Nem publikálunk négyzetméter/nap értéket.'],
+        ['Adatátadás határideje', 'A feldolgozás és a kért formátum után, a helyszíni naptól külön.'],
       ],
     },
     {
@@ -321,43 +331,33 @@ export const commitments = [
   { title: 'Átadási ütem', text: 'Formátum és nyitott kérdések a megbízásban, nem utólag.' },
 ];
 
+const explainers = publicExplainers();
+const speedClaims = publicSpeedClaims();
+
 export const techPage = {
   path: '/technologia',
   kicker: 'Műszerismertető',
-  h1: 'A Trimble X9 technológiai képességei',
-  metaTitle: 'A Trimble X9 technológiai képességei | Hatékony 3D felmérés',
-  metaDescription: 'Gyártói műszerismertető a Trimble X9-ről: 3,0 mm 20 m-en és 3×10 MP kamera. A 150 m és az 1 millió pont/s csak Premium adat, nem vállalt jellemző.',
-  lede: 'Ez gyártói műszerismertető. Nem állítjuk, hogy minden felmérés Trimble X9-cel készül, és nem állítunk saját eszközparkot vagy hivatalos Trimble-partnerséget.',
+  h1: 'Gyártói műszeradatok',
+  metaTitle: 'Gyártói műszeradatok | Hatékony 3D felmérés',
+  metaDescription: 'Trimble X9, Leica RTC360 és RIEGL VZ-600i gyártói adatai feltételekkel. A mérési sebesség nincs publikálva, saját műszerpark nincs megerősítve.',
+  lede: 'Gyártói adat, nem a felmérés vállalt jellemzője. A használt műszer és a konfiguráció nincs rögzítve. A mérési sebesség csak megerősített hozzáféréssel és jóváhagyással kerülhet az oldalra.',
   blocks: [
-    {
+    ...explainers.map((item) => ({
       type: 'text',
-      h2: 'Core LT, Core és Premium',
+      h2: item.instrument,
       paragraphs: [
-        'A gyártó összehasonlító táblázata mindhárom X9-konfigurációnál 3,0 mm 3D pontpontosságot ad meg 20 m-en, és 3 koaxiális, kalibrált, egyenként 10 MP-es kamerát.',
+        item.text,
+        [`Ellenőrizve: ${item.checkedOn}. `, { href: item.source, label: item.sourceLabel }, '.'],
       ],
-    },
-    {
-      type: 'text',
-      h2: 'Csak az X9 Premium sora',
-      paragraphs: [
-        'Mérési tartomány: 0,6–150 m. Szkennelési sebesség: legfeljebb 1 millió pont/másodperc. A Core LT tartománya 0,6–40 m, a Core tartománya 0,6–80 m, mindkettő sebessége legfeljebb 500 ezer pont/másodperc.',
-        'A ténylegesen használt konfiguráció nincs rögzítve. A 150 m és az 1 millió pont/másodperc ezért nem a szolgáltatás vállalt jellemzője.',
-      ],
-    },
+    })),
     {
       type: 'note',
       title: 'Műszeradat és projektvállalás',
       paragraphs: [
-        'Gyártói műszeradatok. A projektben vállalt pontosságot, lefedettséget és átadási tartalmat az ajánlat rögzíti. A műszeradat nem az összefűzött pontfelhő, a rajz vagy egy BIM-modell automatikus pontossága, és nem a felmérés ideje vagy a teljes lefedettség.',
-      ],
-    },
-    {
-      type: 'text',
-      h2: 'Forrás',
-      paragraphs: ['Ellenőrizve a gyártó oldalain, 2026. november 9-én.'],
-      list: [
-        { href: 'https://geospatial.trimble.com/en/products/hardware/trimble-x9', label: 'Trimble X9 termékoldal' },
-        { href: 'https://geospatial.trimble.com/en/compare-terrestrial-scanning-systems', label: 'Trimble terepi szkennerek összehasonlítása' },
+        speedClaims.length
+          ? speedClaims.join(' ')
+          : 'Az adatgyűjtés sebessége nincs publikálva. Nincs megerősített műszerhozzáférés és nincs jóváhagyott sebességi állítás.',
+        'A projektben vállalt pontosságot, lefedettséget és átadási tartalmat az ajánlat rögzíti. A műszeradat nem az összefűzött pontfelhő, a rajz vagy egy BIM-modell pontossága, és nem a felmérés ideje.',
       ],
     },
   ],
